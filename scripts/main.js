@@ -1,43 +1,7 @@
-// Une classe est un modèle qui permet de créer un ou plusieurs objet(s) = créer les objets grâce au(x) modèle(s)
-// avantage est qu'on peut s'inspirer du modèle ou de la classe pour modifier des détails
-
-// création de la classe 
-
-// class individu { 
-
-//     prenom = "Laura"; // s'appelle une propriété dans class mais est égal à une variable
-//     age = 35
-// }
-
-// const laura = new individu() // création de l'objet à partir de la classe
-// console.log(laura.prenom)
-
-// il est possible de changer des détails en créant un constructeur
-
-// class individu {
-
-//     constructor(prenom, age){
-
-//         this.prenom = prenom; // on utilise this. pour associer aux propriétés de notre objet
-//         this.age = age;
-//     }
-
-//     greet(){
-//         return `Hello, my name is ${this.prenom} and I am ${this.age} years old.`
-//     }
-// }
-
-// const laura = new individu("Laura", 35)
-// const maya = new individu("Maya", 26)
-// console.log(laura.greet())
-
-
-//les fonctions s'appellent méthodes
-
-
 const saveButton = document.querySelector(".save")
 const confirmMessage = document.querySelector(".confirmMessage")
 const totalstudents = document.querySelector(".totalStudents")
+const studentsList = document.querySelector(".studentsList")
 const studentsTable = [] // déclarer le tableau en dehors pour que cela rajoute à chaque fois les objets dedans
 
 class student{ // Création d'objet(s) 
@@ -65,6 +29,10 @@ class student{ // Création d'objet(s)
         return `Vous avez inscrit ${this.nom} ${this.prenom} âgé(e) de ${this.age} ans avec succès ! 🙂`
     }
 
+    addStudentsList(prenom, nom, age){
+        return `<li data-index="${studentsTable.length-1}">${prenom} ${nom}: ${age} ans<span class="cross">❌</span></li>`
+    }
+
     totalStudents(table){
         return `Il y a ${table.length} élève(s) enregistré(s)`
     }
@@ -88,6 +56,9 @@ saveButton.addEventListener('click', function(){
 
     // ajout de l'objet "élève" à notre tableau
     newStudent.addStudent(nom.value, prenom.value, age.value)
+
+    // ajouter l'élève à la liste - à faire avant d'effacer le contenu des champs sinon ne fonctionne pas 
+    studentsList.innerHTML += `${newStudent.addStudentsList(prenom.value, nom.value, age.value)}`
     
     // on vide les champs input
     nom.value = ""
@@ -102,14 +73,30 @@ saveButton.addEventListener('click', function(){
 
     // localStorage.setItem('table', JSON.stringify(table))
 
-    totalstudents.innerHTML = 
-    `
-    ${newStudent.totalStudents(studentsTable)}
-    `
+    totalstudents.innerHTML = `${newStudent.totalStudents(studentsTable)}`
+})
 
-    
+// délégation d'évenements à partir du parent <ul>, on va vérifier si l'enfant de cet <ul> sur lequel on clique contient la class="cross"; si oui, on supprime le parent de cette "cross" cad le <li>
+studentsList.addEventListener('click', function(e){
+    if (e.target.classList.contains("cross")){
+        //obtenir l'index de l'élément ciblé
+        const index = parseInt(e.target.parentElement.getAttribute("data-index"))
+        //supprimer la ligne de cet index dans le tableau, 1 élément
+        studentsTable.splice(index,1)
+        //supprimer la ligne dans la liste visuelle
+        e.target.parentElement.remove()
 
-    
+        console.log(studentsTable)
+
+        //mettre à jour les valeurs de data-index
+        //on récupère tous les <li> dans la liste d'élèves
+        const listItems = studentsList.querySelectorAll("li");
+        listItems.forEach(function(item, i) {
+            item.setAttribute("data-index", i);
+        })
+
+        totalstudents.innerHTML = `${new student().totalStudents(studentsTable)}`
+    }
 
 
 })

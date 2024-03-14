@@ -64,3 +64,15 @@ body{
     margin: 40px 0;
     font-size: 30px;
 }
+ul{
+    list-style-type: none;
+    li{
+        font-size: 20px;
+        span{
+            margin-left: 10px;
+            &:hover{
+                cursor: pointer;
+            }
+        }
+    }
+}
