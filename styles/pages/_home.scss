@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Anta&display=swap');
+
+body{
+    background: url(../../images/aquarelle-retour-au-fond-ecole-espace-blanc_52683-41450.jpg.avif) center/cover;
+    height: 100vh;
+    &::before{
+        @include whitefilter_before;
+    }
+}
+
+.wrapper{
+    width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+    background-color: rgb(249, 215, 221);
+    @include absmiddle;
+    z-index: 1;
+    padding: 100px;
+    border-radius: 10px;
+    h1{
+        position: absolute;
+        top: -78px;
+        left: 50%;
+        translate: -50% 0 0;
+        font-family: "Anta", sans-serif;
+        font-size: 60px;
+        width: 100%;
+
+    }
+    h3{
+        font-size: 35px;
+        border: 1px solid #000;
+        padding: 15px;
+        background-color: #fff;
+    }
+    h4{
+        margin: 0 0 50px 0;
+        font-size: 30px;
+    }
+}
+.info{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    label{
+        margin-bottom: 10px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+    input{
+        margin-bottom: 20px;
+        padding: 5px 10px;
+    }
+}
+.save{
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #000;
+    text-transform: uppercase;
+    font-weight: bold;
+    background: rgb(244, 126, 145);
+}
+.confirmMessage{
+    margin: 40px 0;
+    font-size: 30px;
+}
