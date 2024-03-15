@@ -71,6 +71,10 @@ saveButton.addEventListener('click', function(){
     ${newStudent.greet()}
     `
 
+    setTimeout(function() {
+        confirmMessage.innerHTML = ``
+    }, 5000)
+
     // localStorage.setItem('table', JSON.stringify(table))
 
     totalstudents.innerHTML = `${newStudent.totalStudents(studentsTable)}`
